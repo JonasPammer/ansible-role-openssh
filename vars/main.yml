@@ -2,14 +2,84 @@
 # vars file of ansible-role jonaspammer.openssh
 # (tl;dr: almost not overwrite-able variables)
 
-_openssh_somevar:
-  Debian: ""
-  Debian_10: ""
-  RedHat: ""
+_openssh__packages:
+  default:
+    - openssh-server
+  Suse:
+    - openssh
 
-openssh_somevar: "{{
-  _openssh_somevar[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
-  _openssh_somevar[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
-  _openssh_somevar[ansible_distribution])|default(
-  _openssh_somevar[ansible_os_family])|default(
-  _openssh_somevar['default']) }}"
+_openssh__key_types:
+  default:
+    - rsa
+    - ecdsa
+    - ed25519
+
+openssh__run_directory: /run/sshd
+
+openssh__configuration_file: /etc/ssh/sshd_config
+
+_openssh__service:
+  default: sshd
+  Debian_11: ssh
+  Ubuntu_19: ssh
+  Ubuntu_20: ssh
+
+_openssh__template_src:
+  Alpine: sshd_config_Alpine.jinja2
+  Debian: sshd_config_Debian.jinja2
+  Fedora: sshd_config_Fedora.jinja2
+  RedHat_7: sshd_config_RedHat-7.jinja2
+  RedHat: &rhel sshd_config_RedHat.jinja2
+  Rocky: *rhel
+  Suse: sshd_config_Suse.jinja2
+
+_openssh__template_mode:
+  default: u=rw,g=r,o=r
+  RedHat: u=rw,g=,o=
+  Suse: u=rw,g=r,o=
+
+_openssh__sftp_server:
+  default: /usr/libexec/openssh/sftp-server
+  Debian: /usr/lib/openssh/sftp-server
+
+openssh__key_types: "{{
+  _openssh__key_types[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__key_types[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__key_types[ansible_distribution])|default(
+  _openssh__key_types[ansible_os_family])|default(
+  _openssh__key_types['default']) }}"
+
+openssh__service: "{{
+  _openssh__service[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__service[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__service[ansible_distribution])|default(
+  _openssh__service[ansible_os_family])|default(
+  _openssh__service['default']) }}"
+
+openssh__template_src: "{{
+  _openssh__template_src[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__template_src[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__template_src[ansible_distribution])|default(
+  _openssh__template_src[ansible_os_family])|default(
+  _openssh__template_src['default']) }}"
+
+openssh__template_mode: "{{
+  _openssh__template_mode[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__template_mode[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__template_mode[ansible_distribution])|default(
+  _openssh__template_mode[ansible_os_family])|default(
+  _openssh__template_mode['default']) }}"
+
+openssh__sftp_server: "{{
+  _openssh__sftp_server[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__sftp_server[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__sftp_server[ansible_distribution])|default(
+  _openssh__sftp_server[ansible_os_family])|default(
+  _openssh__sftp_server['default']) }}"
+
+openssh__packages: "{{
+  _openssh__packages[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh__packages[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh__packages[ansible_distribution])|default(
+  _openssh__packages[ansible_os_family])|default(
+  _openssh__packages['default']) }}"
