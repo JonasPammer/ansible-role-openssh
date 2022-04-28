@@ -290,8 +290,8 @@ Whether to restart openssh immediately or after
 all other Ansible tasks have been completed.
 
 
-[[public_variables]]
-== Facts/Variables defined by this role
+[[public_vars]]
+== 📜 Facts/Variables defined by this role
 
 Each variable listed in this section
 is dynamically defined when executing this role (and can only be overwritten using `ansible.builtin.set_facts`) _and_

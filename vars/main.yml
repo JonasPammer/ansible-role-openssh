@@ -29,7 +29,8 @@ _openssh__template_src:
   Debian: sshd_config_Debian.jinja2
   Fedora: sshd_config_Fedora.jinja2
   RedHat_7: sshd_config_RedHat-7.jinja2
-  RedHat: sshd_config_RedHat.jinja2
+  RedHat: &rhel sshd_config_RedHat.jinja2
+  Rocky: *rhel
   Suse: sshd_config_Suse.jinja2
 
 _openssh__template_mode:
