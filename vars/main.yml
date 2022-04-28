@@ -1,0 +1,15 @@
+---
+# vars file of ansible-role jonaspammer.openssh
+# (tl;dr: almost not overwrite-able variables)
+
+_openssh_somevar:
+  Debian: ""
+  Debian_10: ""
+  RedHat: ""
+
+openssh_somevar: "{{
+  _openssh_somevar[ansible_distribution ~ '_' ~ ansible_distribution_major_version]|default(
+  _openssh_somevar[ansible_os_family ~ '_' ~ ansible_distribution_major_version])|default(
+  _openssh_somevar[ansible_distribution])|default(
+  _openssh_somevar[ansible_os_family])|default(
+  _openssh_somevar['default']) }}"
