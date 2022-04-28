@@ -680,7 +680,12 @@ pre.rouge {
 <ul class="sectlevel1">
 <li><a href="#meta">🔎 Metadata</a></li>
 <li><a href="#requirements">📌 Requirements</a></li>
-<li><a href="#variables">📜 Role Variables</a></li>
+<li><a href="#variables">📜 Role Variables</a>
+<ul class="sectlevel2">
+<li><a href="#_etcsshssh_config"><code>/etc/ssh/ssh_config</code></a></li>
+</ul>
+</li>
+<li><a href="#public_vars">📜 Facts/Variables defined by this role</a></li>
 <li><a href="#dependencies">👫 Dependencies</a></li>
 <li><a href="#example_playbooks">📚 Example Playbook Usages</a></li>
 <li><a href="#development">📝 Development</a>
@@ -784,35 +789,261 @@ pre.rouge {
 <p>The <a href="https://galaxy.ansible.com/community/general"><code>community.general</code> collection</a>
 must be installed on the Ansible controller.</p>
 </div>
+<div class="paragraph">
+<p>The <a href="https://galaxy.ansible.com/ansible/posix"><code>ansible.posix</code> collection</a>
+must be installed on the Ansible controller.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="variables">📜 Role Variables</h2>
 <div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="na">variable</span><span class="pi">:</span> <span class="s">default value</span></code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>Description</p>
+<p>Please refer to the <a href="https://man.openbsd.org/ssh_config.5">official ssh_config(5) BSD man page</a>
+for further documentation of all these configuration options.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="na">variable</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">OS-specific by default</span><span class="pi">,</span> <span class="nv">see /vars directory</span><span class="pi">]</span></code></pre>
-</div>
-</div>
+<div class="sect2">
+<h3 id="_etcsshssh_config"><code>/etc/ssh/ssh_config</code></h3>
 <div class="paragraph">
-<p>Description</p>
+<p>These variables are all used in the templates for the system-wide <code>/etc/ssh/ssh_config</code> configuration file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="na">variable</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">OS-specific by default</span><span class="pi">,</span> <span class="nv">see /vars directory</span><span class="pi">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_port</span><span class="pi">:</span> <span class="s">22</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This role configures SELinux&#8217;s network ports definitions to allow this port.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_address_family</span><span class="pi">:</span> <span class="s">any</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_listen_addresses</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">0.0.0.0"</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">::"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_host_keys</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">/etc/ssh/ssh_host_rsa_key</span>
+  <span class="pi">-</span> <span class="s">/etc/ssh/ssh_host_ecdsa_key</span>
+  <span class="pi">-</span> <span class="s">/etc/ssh/ssh_host_ed25519_key</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This role ensures that the above mentioned default host key types exist, always.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_rekey_limit</span><span class="pi">:</span> <span class="s">default none</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_syslog_facility</span><span class="pi">:</span> <span class="s">AUTH</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_loglevel</span><span class="pi">:</span> <span class="s">INFO</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_login_grace_time</span><span class="pi">:</span> <span class="s">2m</span>
+<span class="na">openssh_permit_root_login</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_strict_modes</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_max_auth_tries</span><span class="pi">:</span> <span class="m">6</span>
+<span class="na">openssh_max_sessions</span><span class="pi">:</span> <span class="s">10</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_pub_key_authentication</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_authorized_key_file</span><span class="pi">:</span> <span class="s2">"</span><span class="s">.ssh/authorized_keys"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_authorized_prinicpals_file</span><span class="pi">:</span> <span class="s">none</span>
+<span class="na">openssh_authorized_keys_command</span><span class="pi">:</span> <span class="s">none</span>
+<span class="na">openssh_authorized_keys_command_user</span><span class="pi">:</span> <span class="s">nobody</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_host_based_authentication</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_ignore_user_known_hosts</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_ignore_rhosts</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_permit_empty_passwords</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_password_authentication</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_challenge_response_authentication</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_gssapi_authentication</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_gssapi_cleanup_credentials</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_gssapi_strict_acceptor_check</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_gssapi_key_exchange</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_gssaip_enable_k5_users</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_use_pam</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_allow_agent_forwarding</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_allow_tcp_forwarding</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_gateway_ports</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_x11_forwarding</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_x11_display_offset</span><span class="pi">:</span> <span class="m">10</span>
+<span class="na">openssh_x11_use_localhost</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_permit_tty</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_print_motd</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_print_last_log</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_tcp_keep_alive</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yes"</span>
+<span class="na">openssh_permit_user_environment</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_compression</span><span class="pi">:</span> <span class="s">delayed</span>
+<span class="na">openssh_client_alive_interval</span><span class="pi">:</span> <span class="m">30</span>
+<span class="na">openssh_client_alive_count_max</span><span class="pi">:</span> <span class="m">3</span>
+<span class="na">openssh_show_patch_level</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_use_dns</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_pid_file</span><span class="pi">:</span> <span class="s">/var/run/sshd.pid</span>
+<span class="na">openssh_max_startups</span><span class="pi">:</span> <span class="s2">"</span><span class="s">10:30:100"</span>
+<span class="na">openssh_permit_tunnel</span><span class="pi">:</span> <span class="s2">"</span><span class="s">no"</span>
+<span class="na">openssh_chroot_directory</span><span class="pi">:</span> <span class="s">none</span>
+<span class="na">openssh_version_addendum</span><span class="pi">:</span> <span class="s">none</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_banner</span><span class="pi">:</span> <span class="s">none</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_accept_envs</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">LANG</span>
+  <span class="pi">-</span> <span class="s">LANGUAGE</span>
+  <span class="pi">-</span> <span class="s">LC_ADDRESS</span>
+  <span class="pi">-</span> <span class="s">LC_ALL</span>
+  <span class="pi">-</span> <span class="s">LC_COLLATE</span>
+  <span class="pi">-</span> <span class="s">LC_CTYPE</span>
+  <span class="pi">-</span> <span class="s">LC_IDENTIFICATION</span>
+  <span class="pi">-</span> <span class="s">LC_MEASUREMENT</span>
+  <span class="pi">-</span> <span class="s">LC_MESSAGES</span>
+  <span class="pi">-</span> <span class="s">LC_MONETARY</span>
+  <span class="pi">-</span> <span class="s">LC_NAME</span>
+  <span class="pi">-</span> <span class="s">LC_NUMERIC</span>
+  <span class="pi">-</span> <span class="s">LC_PAPER</span>
+  <span class="pi">-</span> <span class="s">LC_TELEPHONE</span>
+  <span class="pi">-</span> <span class="s">LC_TIME</span>
+  <span class="pi">-</span> <span class="s">XMODIFIERS</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_subsystem</span><span class="pi">:</span> <span class="s">sftp {{ openssh__sftp_server }}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_trusted_user_ca_keys</span><span class="pi">:</span> <span class="s">none</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>(Debian/Ubuntu only)
-Description</p>
+<p>Specifies a file containing public keys of certificate authorities that are
+trusted to sign user certificates for authentication, or none to not use one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="c1"># openssh_allow_users: root</span>
+<span class="c1"># openssh_allow_groups: wheel</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Restrict access to this (space separated list) of users or groups.
+For example: <code>openssh_allow_users: root my_user</code>, <code>openssh_allow_groups: wheel my_group</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="na">openssh_restart_immediately</span><span class="pi">:</span> <span class="no">false</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whether to restart openssh immediately or after
+all other Ansible tasks have been completed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="public_vars">📜 Facts/Variables defined by this role</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each variable listed in this section
+is dynamically defined when executing this role (and can only be overwritten using <code>ansible.builtin.set_facts</code>) <em>and</em>
+is meant to be used not just internally.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">openssh__service</dt>
+<dd>
+<p>== 📜 Facts/Variables defined by this role</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Each variable listed in this section
+is dynamically defined when executing this role (and can only be overwritten using <code>ansible.builtin.set_facts</code>) <em>and</em>
+is meant to be used not just internally.</p>
 </div>
 </div>
 </div>
@@ -1225,7 +1456,7 @@ SOFTWARE.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-04-28 11:54:34 UTC
+Last updated 2022-04-28 15:15:22 UTC
 </div>
 </div>
 </body>
