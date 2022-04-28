@@ -20,15 +20,15 @@ openssh__configuration_file: /etc/ssh/sshd_config
 
 _openssh__service:
   default: sshd
-  Debian-11: ssh
-  Ubuntu-19: ssh
-  Ubuntu-20: ssh
+  Debian_11: ssh
+  Ubuntu_19: ssh
+  Ubuntu_20: ssh
 
 _openssh__template_src:
   Alpine: sshd_config_Alpine.jinja2
   Debian: sshd_config_Debian.jinja2
   Fedora: sshd_config_Fedora.jinja2
-  RedHat-7: sshd_config_RedHat-7.jinja2
+  RedHat_7: sshd_config_RedHat-7.jinja2
   RedHat: sshd_config_RedHat.jinja2
   Suse: sshd_config_Suse.jinja2
 
