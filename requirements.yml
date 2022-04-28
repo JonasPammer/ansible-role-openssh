@@ -2,6 +2,8 @@
 roles:
   - name: jonaspammer.bootstrap
   - name: jonaspammer.core_dependencies
+  - name: robertdebock.selinux
 collections:
   - name: community.docker # only needed for molecule execution
   - name: community.general
+  - name: ansible.posix

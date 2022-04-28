@@ -10,5 +10,27 @@
 ### Actual Role Verification Tasks:
 - name: Verify
   hosts: all
+  become: true
+  gather_facts: false
 
   tasks:
+    - name: check if connection still works
+      ansible.builtin.ping:
+
+    - name: Check if AllowUsers is set.
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: AllowUsers root
+      check_mode: true
+      register: openssh__register_lineinfile_allowusers
+      failed_when:
+        - openssh__register_lineinfile_allowusers is changed
+
+    - name: Check if AllowGroups is set.
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: AllowGroups root
+      check_mode: true
+      register: openssh__register_lineinfile_allowgroups
+      failed_when:
+        - openssh__register_lineinfile_allowgroups is changed
