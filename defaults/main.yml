@@ -40,7 +40,7 @@ openssh_ignore_user_known_hosts: "no"
 openssh_ignore_rhosts: "yes"
 
 openssh_permit_empty_passwords: "no"
-openssh_password_authentication: "yes"
+openssh_password_authentication: "yes" # pragma: allowlist secret
 
 openssh_challenge_response_authentication: "no"
 
