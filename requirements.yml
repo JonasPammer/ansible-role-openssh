@@ -2,7 +2,7 @@
 roles:
   - name: jonaspammer.bootstrap
   - name: robertdebock.selinux
+# NOTE: list all collections used here (even if included in `ansible`)
 collections:
-  - name: community.docker # only needed for molecule execution
   - name: community.general
   - name: ansible.posix
