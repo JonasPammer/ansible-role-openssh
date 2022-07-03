@@ -12,7 +12,7 @@
       "min_ansible_version": "2.9",
       "allow_duplicates": "no",
       "ansible_user_needs_to_become": "True",
-      "_role_name": null,
+      "role_name_": "openssh",
       "role_name": "openssh",
       "project_slug": "ansible-role-openssh",
       "project_short_purpose": "installing and configure openssh-server",
